@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>美团商家数据系统</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/static/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <!-- <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"> -->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-form-title" style="background-image: url(/static/images/bg-01.jpg);">
+					<span class="login100-form-title-1">
+						美团商家数据系统
+					</span>
+            </div>
+
+            <div class="login100-form validate-form">
+                <div class="wrap-input100 validate-input m-b-26" data-validate="邮箱不能为空">
+                    <span class="label-input100">邮箱</span>
+                    <input class="input100" type="email" name="userEmail" placeholder="输入邮箱">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-18" data-validate = "密码不能为空">
+                    <span class="label-input100">密码</span>
+                    <input class="input100" type="password" name="userPass" placeholder="输入密码">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="flex-sb-m w-full p-b-30">
+                    <div class="contact100-form-checkbox">
+
+                    </div>
+
+                    <div>
+                        <a href="/register.html" class="txt1">
+                            还没账号？现在注册
+                        </a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn" id="login">
+                    <button class="login100-form-btn">
+                        登陆
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+<script src="/static/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/main.js"></script>
+
+<script>
+    $("#login").click(
+        function (){
+            const userString = {
+                "userEmail" : $("input[name = 'userEmail']").val(),
+                "userPass": $("input[name = 'userPass']").val()
+            };
+            const userJson = JSON.stringify(userString);
+            $.ajax({
+                type : "post",
+                data : userJson,
+                url : "/login",
+                contentType: "application/json",
+                dataType: "json",
+                success : function(data){
+                    if(data.code){
+                        console.log("登陆成功，即将跳转到管理界面");
+                        location.href="/admin/";
+                    }else{
+                        console.log(data.message);
+                    }
+                },
+                error : function(){
+                    console.log("error")
+                }
+            })
+        }
+    )
+</script>
+
+</body>
+</html>

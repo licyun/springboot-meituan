@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/static/css/shops.css">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div class="layui-main mz-frame-pd">
+
+    <div class="choose-city">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择地区</label>
+                <div class="layui-input-inline">
+                    <select name="province" id="province" lay-filter="province">
+                        <option value="">请选择省</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="city" id="city" lay-filter="city">
+                        <option value="">请选择城市</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="district" id="district" lay-filter="district">
+                        <option value="">请选择区</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="street" id="street" lay-filter="street">
+                        <option value="">请选择街道</option>
+                    </select>
+                </div>
+                <button type="button" class="layui-btn" id="search">查询</button>
+                <button type="button" class="layui-btn" id="down">导出excel</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="layui-hide" id="test"></table>
+
+    <script type="text/html" id="checkboxTpl">
+
+        <input type="checkbox" name="lock" value="{{d.id}}" title="已联" lay-filter="lockDemo" {{ d.id == 10006 ? 'checked' : '' }}>
+    </script>
+
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+
+    <script>
+
+
+        layui.use(['table', 'form'], function(){
+            let form = layui.form;
+            let layer = layui.layer;
+            let table = layui.table;
+            let $ = layui.jquery;
+
+            /** 获取地域数据 */
+            let provinceUrl = "/admin/get-provinces"    //获取省份
+            let cityUrl = "/admin/get-cities-"        //获取城市
+            let districtUrl = "/admin/get-areas-"    //获取区
+            let streetUrl = "/admin/get-areas-"     //获取街道
+
+            let provincePrompt = '<option value="">请选择省(必选)</option>';
+            let cityPrompt = '<option value="">请选择城市(必选)</option>';
+            let districtPromp = '<option value="">请选择区(可选)</option>';
+            let streetPromp = '<option value="">请选择街道(可选)</option>';
+
+            function getProvinces(){
+                getAreaData(1, provinceUrl)
+            }
+
+            function getCities(provinceCode){
+                let url = cityUrl + provinceCode;
+                getAreaData(2, url)
+            }
+
+            function getDistrict(cityId){
+                let url = districtUrl + cityId;
+                getAreaData(3, url)
+            }
+
+            function getStreet(districtId){
+                let url = streetUrl + districtId;
+                getAreaData(4, url)
+            }
+
+            function getAreaData(type, url){
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    success: function (data){
+                        let jsonArray = data;
+                        let html = '';
+                        if( type === 1){                    //获取省份
+                            for( let i in jsonArray ){
+                                let province = jsonArray[i];
+                                let optionDisable = "";
+                                let optionPrompt = "";
+                                if( province.provinceIsCollect === 0 ){
+                                    optionDisable = "disabled"
+                                    optionPrompt = "（未采集）"
+                                }
+                                html = html + '<option ' + optionDisable + ' value="'+ province.provinceCode +'">'+ province.provinceName  + optionPrompt +'</option>';
+                            }
+                            html = provincePrompt + html;
+                            $("#province").html(html);
+                            $("#city").html(cityPrompt);
+                            $("#district").html(districtPromp);
+                            $("#street").html(streetPromp);
+                        }else if( type === 2){              //获取城市
+                            for( let i in jsonArray ){
+                                let city = jsonArray[i]
+                                let optionDisable = "";
+                                let optionPrompt = "";
+                                if( city.cityIsCollect === 0 ){
+                                    optionDisable = "disabled"
+                                    optionPrompt = "（未采集）"
+                                }
+                                html = html + '<option ' + optionDisable + '  value="'+ city.cityId +'">'+ city.cityName + optionPrompt +'</option>';
+                            }
+                            html = cityPrompt + html;
+                            $("#city").html(html);
+                            $("#district").html(districtPromp);
+                            $("#street").html(streetPromp);
+                        }else if( type === 3 ){             //获取区
+                            for( let i in jsonArray ){
+                                let district = jsonArray[i]
+                                let optionDisable = "";
+                                let optionPrompt = "";
+                                if( district.areaIsCollect === 0 ){
+                                    optionDisable = "disabled"
+                                    optionPrompt = "（未采集）"
+                                }
+                                html = html + '<option ' + optionDisable + ' value="'+ district.areaId +'">'+ district.areaName + optionPrompt +'</option>';
+                            }
+                            html = districtPromp + html;
+                            $("#district").html(html);
+                            $("#street").html(streetPromp);
+                        }else if( type === 4 ){             //获取街道
+                            for( let i in jsonArray ){
+                                let address = jsonArray[i]
+                                let optionDisable = "";
+                                let optionPrompt = "";
+                                if( address.areaIsCollect === 0 ){
+                                    optionDisable = "disabled"
+                                    optionPrompt = "（未采集）"
+                                }
+                                html = html + '<option ' + optionDisable + ' value="'+ address.areaId +'">'+ address.areaName + optionPrompt +'</option>';
+                            }
+                            html = streetPromp + html;
+                            $("#street").html(html);
+                        }
+                        form.render("select");
+                    },
+                    error: function (data){
+                        console.log("error:" + data)
+                    }
+
+                })
+            }
+
+            /** 页面初始化时获取省份数据 */
+            layer.ready(function(){
+                getProvinces();
+            });
+
+            // 选择省份自动加载城市
+            form.on('select(province)', function(data){
+                getCities(data.value);
+            });
+
+            // 选择城市自动加载区
+            form.on('select(city)',function (data){
+                getDistrict(data.value);
+            })
+
+            // 选择区自动加载街道
+            form.on('select(district)',function (data){
+                getStreet(data.value);
+            })
+
+            // 选择街道自动加载街道
+
+
+            /** 获取商家数据 */
+            function getTable(areaId, areaType){
+                table.render({
+                    elem: '#test'
+                    ,url:'/admin/get-shops-by-' + areaId + '-' + areaType
+                    ,cellMinWidth: 100
+                    ,cols: [[
+                        {type:'checkbox'}
+                        ,{field:'shopId', title: '商家ID', sort: true}
+                        ,{field:'shopName', width:220, title: '商家名称'}
+                        ,{field:'shopPhone', width:150, title: '商家电话', sort: true}
+                        ,{field:'shopAddress', width:220, title: '商家地址'}
+                        ,{field:'shopCityName', width: 80, title: '城市'}
+                        ,{field:'shopDistrictName', width: 80, title: '区', sort: true}
+                        ,{field:'shopStreetName', title: '街道', sort: true}
+                        // ,{field:'lock', title:'是否已联系', width:110, templet: '#checkboxTpl', unresize: true}
+                    ]]
+                    ,page: true
+                });
+            }
+
+            $("#search").click(function(){
+                let streetId = $("#street").val()
+                let districtId = $("#district").val()
+                let cityId = $("#city").val()
+                if( streetId !== ""){
+                    getTable(streetId, 3);
+                }else if( districtId !== "" ){
+                    getTable(districtId, 2);
+                }else if( cityId !== "" ){
+                    getTable(cityId, 1);
+                }else{
+                    layer.msg("请选择要查询的城市")
+                }
+
+            });
+        });
+    </script>
+
+</div>
+</body>
+</html>
