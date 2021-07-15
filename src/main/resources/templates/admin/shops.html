@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Layui</title>
@@ -18,8 +18,9 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">选择地区</label>
                 <div class="layui-input-inline">
-                    <select name="province" id="province" lay-filter="province">
+                    <select  name="province" id="province" lay-filter="province">
                         <option value="">请选择省</option>
+<!--                        <option th:each="province: ${provinces}" th:disabled="${province.getProvinceIsCollect()} != 1" th:value="${province.getProvinceCode()}" th:text="${province.getProvinceName()}" ></option>-->
                     </select>
                 </div>
                 <div class="layui-input-inline">
@@ -193,11 +194,13 @@
 
             /** 获取商家数据 */
             function getTable(areaId, areaType){
+                console.log("getTable function");
                 table.render({
-                    elem: '#test'
-                    ,url:'/admin/get-shops-by-' + areaId + '-' + areaType
-                    ,cellMinWidth: 100
-                    ,cols: [[
+                    elem: '#test',
+                    url:'/admin/get-shops-by-' + areaId + '-' + areaType,
+                    cellMinWidth: 100,
+                    cols: [
+                        [
                         {type:'checkbox'}
                         ,{field:'shopId', title: '商家ID', sort: true}
                         ,{field:'shopName', width:220, title: '商家名称'}
@@ -207,7 +210,8 @@
                         ,{field:'shopDistrictName', width: 80, title: '区', sort: true}
                         ,{field:'shopStreetName', title: '街道', sort: true}
                         // ,{field:'lock', title:'是否已联系', width:110, templet: '#checkboxTpl', unresize: true}
-                    ]]
+                        ]
+                    ]
                     ,page: true
                 });
             }

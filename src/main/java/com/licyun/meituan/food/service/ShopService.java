@@ -1,19 +1,17 @@
 package com.licyun.meituan.food.service;
 
-import com.licyun.meituan.food.domain.City;
-import com.licyun.meituan.food.domain.Shop;
-import com.licyun.meituan.food.domain.ShopResult;
+import com.licyun.meituan.food.domain.*;
 import com.licyun.meituan.food.repository.AreaRepository;
 import com.licyun.meituan.food.repository.CityRepository;
 import com.licyun.meituan.food.repository.ShopRepository;
-import com.licyun.meituan.food.utils.ShopResultUtil;
+import com.licyun.meituan.food.utils.ResultUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.awt.print.Pageable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -28,8 +26,13 @@ public class ShopService {
     @Resource
     ShopRepository shopRepository;
 
+    public Page<Shop> findByShopCityId(Integer shopId, Integer page, Integer limit){
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Shop> shopPage = shopRepository.findByShopCityId(shopId, pageable);
+        return  shopPage;
+    }
 
-    public ShopResult findAllByAreaTypeAndId(Integer areaId, Integer areaType, Integer page, Integer size){
+    public ResultData<?> findAllByAreaTypeAndId(Integer areaId, Integer areaType, Integer page, Integer size){
         List<Shop>  shopList = new ArrayList<>();
         Integer pageBegin = (page - 1) * size;
         Integer count = 0;
@@ -44,13 +47,13 @@ public class ShopService {
             count = shopRepository.countByShopStreetId(areaId);
         }
         shopList = transferShopTable(shopList);
-        ShopResult shopResult = ShopResultUtil.success(shopList, count);
-        return shopResult;
+        ResultData<?> resultData = ResultUtil.success(
+                ResultDataEnum.SUCCESS_SHOP.getCode(), ResultDataEnum.SUCCESS_SHOP.getMsg(), count, shopList);
+        return resultData;
     }
 
     public List<Shop> transferShopTable(List<Shop> shops){
-        for( int i = 0; i < shops.size(); i++){
-            Shop shop = shops.get(i);
+        for (Shop shop : shops) {
             // 设置城市名称
             Integer cityId = shop.getShopCityId();
             String cityName = cityRepository.findByCityId(cityId).getCityName();

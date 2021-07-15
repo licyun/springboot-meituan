@@ -1,13 +1,15 @@
 package com.licyun.meituan.food.domain;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+@Data
 @Entity
-@Table(name = "user")
+@Table(name = "mt_user")
 public class User {
 
     @Id
@@ -36,54 +38,4 @@ public class User {
             columnDefinition=" int(11) default 1 comment '用户权限' ")
     private Integer userRole;
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserPass() {
-        return userPass;
-    }
-
-    public void setUserPass(String userPass) {
-        this.userPass = userPass;
-    }
-
-    public Integer getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(Integer userRole) {
-        this.userRole = userRole;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userEmail='" + userEmail + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPass='" + userPass + '\'' +
-                ", userRole=" + userRole +
-                '}';
-    }
 }

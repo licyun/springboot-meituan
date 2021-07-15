@@ -1,8 +1,5 @@
 package com.licyun.meituan.food.config;
 
-import com.licyun.meituan.food.handle.LoginInterceptor;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -10,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class webResourceConfig implements WebMvcConfigurer {
+public class WebResourceConfig implements WebMvcConfigurer {
 
     /**
      * 配置静态资源的映射
@@ -32,10 +29,10 @@ public class webResourceConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        LoginInterceptor loginInterceptor = new LoginInterceptor();
-        registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/admin/**")          //拦截管理页面
-                .excludePathPatterns("/admin/exit"); //排除退出页面
+//        LoginInterceptor loginInterceptor = new LoginInterceptor();
+//        registry.addInterceptor(loginInterceptor)
+//                .addPathPatterns("/admin/**")          //拦截管理页面
+//                .excludePathPatterns("/admin/exit"); //排除退出页面
     }
 
     @Override

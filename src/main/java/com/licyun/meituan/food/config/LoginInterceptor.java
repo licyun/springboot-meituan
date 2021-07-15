@@ -1,4 +1,4 @@
-package com.licyun.meituan.food.handle;
+package com.licyun.meituan.food.config;
 
 import com.licyun.meituan.food.domain.User;
 import org.slf4j.LoggerFactory;

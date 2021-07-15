@@ -1,10 +1,13 @@
 package com.licyun.meituan.food.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
-@Table(name = "meituan_province")
-@org.hibernate.annotations.Table(appliesTo = "meituan_province",comment = "省份信息表")
+@Table(name = "mt_province")
+@org.hibernate.annotations.Table(appliesTo = "mt_province",comment = "省份信息表")
 public class Province {
 
     @Id
@@ -24,35 +27,4 @@ public class Province {
     private Integer provinceIsCollect;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getProvinceCode() {
-        return provinceCode;
-    }
-
-    public void setProvinceCode(Integer provinceCode) {
-        this.provinceCode = provinceCode;
-    }
-
-    public String getProvinceName() {
-        return provinceName;
-    }
-
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
-
-    public Integer getProvinceIsCollect() {
-        return provinceIsCollect;
-    }
-
-    public void setProvinceIsCollect(Integer provinceIsCollect) {
-        this.provinceIsCollect = provinceIsCollect;
-    }
 }

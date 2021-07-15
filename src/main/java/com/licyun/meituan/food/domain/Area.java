@@ -1,11 +1,14 @@
 package com.licyun.meituan.food.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
-@Table(name = "meituan_area")
-@org.hibernate.annotations.Table(appliesTo = "meituan_area",comment = "区与街道信息表")
+@Table(name = "mt_area")
+@org.hibernate.annotations.Table(appliesTo = "mt_area",comment = "区与街道信息表")
 public class Area {
 
     @Id
@@ -41,67 +44,4 @@ public class Area {
             columnDefinition = " int(1) comment '该地域采集标示: 0 未采集, 1 已采集, 2 中断采集' ")
     private Integer areaIsCollect;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(Integer areaId) {
-        this.areaId = areaId;
-    }
-
-    public Integer getAreaType() {
-        return areaType;
-    }
-
-    public void setAreaType(Integer areaType) {
-        this.areaType = areaType;
-    }
-
-    public Integer getAreaParentId() {
-        return areaParentId;
-    }
-
-    public void setAreaParentId(Integer areaParentId) {
-        this.areaParentId = areaParentId;
-    }
-
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
-    }
-
-    public Integer getAreaShopNumber() {
-        return areaShopNumber;
-    }
-
-    public void setAreaShopNumber(Integer areaShopNumber) {
-        this.areaShopNumber = areaShopNumber;
-    }
-
-    public Date getAreaCollectDate() {
-        return areaCollectDate;
-    }
-
-    public void setAreaCollectDate(Date areaCollectDate) {
-        this.areaCollectDate = areaCollectDate;
-    }
-
-    public Integer getAreaIsCollect() {
-        return areaIsCollect;
-    }
-
-    public void setAreaIsCollect(Integer areaIsCollect) {
-        this.areaIsCollect = areaIsCollect;
-    }
 }

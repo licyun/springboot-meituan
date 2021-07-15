@@ -92,15 +92,19 @@
                 contentType: "application/json",
                 dataType: "json",
                 success : function(data){
-                    let messageJson = eval(data);
-                    if(messageJson.code){
+                    let dataJson = eval(data);
+                    console.log("dataJson" + dataJson);
+                    console.log("dataJson.code" + dataJson.code);
+                    if(dataJson.code === 200){
+
                         console.log("注册成功，即将跳转到登陆界面");
                     }else{
-                        console.log(messageJson.message);
+                        console.log(dataJson.msg);
                     }
                 },
-                error : function(){
-                    console.log("error")
+                error : function(data){
+                    let dataJson = eval(data);
+                    console.log("error" + dataJson.msg);
                 }
             })
         }

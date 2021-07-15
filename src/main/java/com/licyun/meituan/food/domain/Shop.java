@@ -1,11 +1,15 @@
 package com.licyun.meituan.food.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
-@Table(name = "meituan_shop")
-@org.hibernate.annotations.Table(appliesTo = "meituan_shop",comment = "商家信息表")
+
+@Table(name = "mt_shop")
+@org.hibernate.annotations.Table(appliesTo = "mt_shop",comment = "商家信息表")
 public class Shop {
 
     @Id
@@ -51,99 +55,4 @@ public class Shop {
     @Transient
     private String shopStreetName;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(Integer shopId) {
-        this.shopId = shopId;
-    }
-
-    public String getShopName() {
-        return shopName;
-    }
-
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
-    }
-
-    public String getShopAddress() {
-        return shopAddress;
-    }
-
-    public void setShopAddress(String shopAddress) {
-        this.shopAddress = shopAddress;
-    }
-
-    public String getShopPhone() {
-        return shopPhone;
-    }
-
-    public void setShopPhone(String shopPhone) {
-        this.shopPhone = shopPhone;
-    }
-
-    public Integer getShopCityId() {
-        return shopCityId;
-    }
-
-    public void setShopCityId(Integer shopCityId) {
-        this.shopCityId = shopCityId;
-    }
-
-    public Integer getShopDistrictId() {
-        return shopDistrictId;
-    }
-
-    public void setShopDistrictId(Integer shopDistrictId) {
-        this.shopDistrictId = shopDistrictId;
-    }
-
-    public Integer getShopStreetId() {
-        return shopStreetId;
-    }
-
-    public void setShopStreetId(Integer shopStreetId) {
-        this.shopStreetId = shopStreetId;
-    }
-
-    public Date getShopCollectDate() {
-        return shopCollectDate;
-    }
-
-    public void setShopCollectDate(Date shopCollectDate) {
-        this.shopCollectDate = shopCollectDate;
-    }
-
-    public String getShopCityName() {
-        return shopCityName;
-    }
-
-    public void setShopCityName(String shopCityName) {
-        this.shopCityName = shopCityName;
-    }
-
-    public String getShopDistrictName() {
-        return shopDistrictName;
-    }
-
-    public void setShopDistrictName(String shopDistrictName) {
-        this.shopDistrictName = shopDistrictName;
-    }
-
-    public String getShopStreetName() {
-        return shopStreetName;
-    }
-
-    public void setShopStreetName(String shopStreetName) {
-        this.shopStreetName = shopStreetName;
-    }
 }

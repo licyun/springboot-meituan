@@ -1,10 +1,13 @@
 package com.licyun.meituan.food.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
-@Table(name = "meituan_city")
-@org.hibernate.annotations.Table(appliesTo = "meituan_city",comment = "城市信息表")
+@Table(name = "mt_city")
+@org.hibernate.annotations.Table(appliesTo = "mt_city",comment = "城市信息表")
 public class City {
 
     @Id

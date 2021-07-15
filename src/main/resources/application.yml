@@ -1,3 +1,6 @@
+server:
+  port: 8083
+
 spring:
   profiles:
     active: dev
@@ -5,7 +8,12 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/meituan_food?characterEncoding=utf-8
     username: root
-    password: 123456
+    password: Mysql1688.
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+    prefix: classpath:/templates/
+    encoding: UTF-8
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,6 +21,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  
 
 
 
