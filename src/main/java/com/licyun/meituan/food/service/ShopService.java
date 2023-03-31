@@ -34,16 +34,24 @@ public class ShopService {
 
     public ResultData<?> findAllByAreaTypeAndId(Integer areaId, Integer areaType, Integer page, Integer size){
         List<Shop>  shopList = new ArrayList<>();
-        Integer pageBegin = (page - 1) * size;
+//        Integer pageBegin = (page - 1) * size;
         Integer count = 0;
-        if( areaType ==  1 ){
-            shopList = shopRepository.findAllByShopCityIdWithLimit(areaId, pageBegin, size);
-            count = shopRepository.countByShopCityId(areaId);
-        }else if( areaType == 2 ){
-            shopList = shopRepository.findAllByShopDistrictIdWithLimit(areaId, pageBegin, size);
+        Pageable pageable = PageRequest.of(page, size);
+        if( areaType == 1 ){
+            Page<Shop> shopPage = shopRepository.findByShopCityId(areaId, pageable);
+            shopList = shopPage.getContent();
+//            shopList = shopRepository.findAllByShopDistrictIdWithLimit(areaId, pageBegin, size);
+            count = shopRepository.countByShopDistrictId(areaId);
+        }
+        else if( areaType == 2 ){
+            Page<Shop> shopPage = shopRepository.findAllByShopDistrictId(areaId, pageable);
+            shopList = shopPage.getContent();
+//            shopList = shopRepository.findAllByShopDistrictIdWithLimit(areaId, pageBegin, size);
             count = shopRepository.countByShopDistrictId(areaId);
         }else if( areaType == 3 ){
-            shopList = shopRepository.findAllByShopStreetIdWithLimit(areaId, pageBegin, size);
+            Page<Shop> shopPage = shopRepository.findAllByShopStreetId(areaId, pageable);
+            shopList = shopPage.getContent();
+//            shopList = shopRepository.findAllByShopStreetIdWithLimit(areaId, pageBegin, size);
             count = shopRepository.countByShopStreetId(areaId);
         }
         shopList = transferShopTable(shopList);

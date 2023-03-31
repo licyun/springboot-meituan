@@ -5,10 +5,10 @@ spring:
   profiles:
     active: dev
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/meituan_food?characterEncoding=utf-8
     username: root
-    password: Mysql1688.
+    password: 123456
   thymeleaf:
     mode: LEGACYHTML5
     cache: false

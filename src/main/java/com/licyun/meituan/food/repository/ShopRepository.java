@@ -20,12 +20,12 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     @Query(nativeQuery=true, value = "select * from mt_shop where shop_district_id = ?1  LIMIT ?2, ?3")
     List<Shop> findAllByShopDistrictIdWithLimit(Integer districtId, Integer page, Integer size);
 
-    List<Shop> findAllByShopDistrictId(Integer districtId);
+    Page<Shop> findAllByShopDistrictId(Integer districtId, Pageable pageable);
 
     @Query(nativeQuery=true, value = "select * from mt_shop where shop_street_id = ?1  LIMIT ?2, ?3")
     List<Shop> findAllByShopStreetIdWithLimit(Integer streetId, Integer page, Integer size);
 
-    List<Shop> findAllByShopStreetId(Integer streetId);
+    Page<Shop> findAllByShopStreetId(Integer streetId, Pageable pageable);
 
     Integer countByShopCityId(Integer cityId);
 

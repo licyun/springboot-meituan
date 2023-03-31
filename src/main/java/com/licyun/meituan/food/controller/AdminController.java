@@ -68,8 +68,10 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping(value = "/get-shops-by-{areaId}-{areaType}")
-    public ResultData<?> getShopsByAreaIdAndType(@PathVariable Integer areaId,
-                                                 @PathVariable Integer areaType, Integer page, Integer limit){
+    public ResultData<?> getShopsByAreaIdAndType(@PathVariable("areaId") Integer areaId,
+                                                 @PathVariable("areaType") Integer areaType,
+                                                 Integer page,
+                                                 Integer limit){
 
         ResultData<?> resultData = shopService.findAllByAreaTypeAndId(areaId, areaType, page, limit);
         return resultData;
