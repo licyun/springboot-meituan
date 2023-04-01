@@ -41,7 +41,7 @@ public class ValidateUtil {
     }
 
     /**
-     * 注释3
+     * 注释4
      * @param userPass
      * @return
      */
