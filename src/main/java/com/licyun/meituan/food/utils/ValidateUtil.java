@@ -40,6 +40,11 @@ public class ValidateUtil {
         return flag;
     }
 
+    /**
+     * 注释
+     * @param userPass
+     * @return
+     */
     public boolean checkUserPass(String userPass){
         boolean flag = false;
         if( userPass.length() >=6 & userPass.length() <=12){
@@ -47,4 +52,6 @@ public class ValidateUtil {
         }
         return flag;
     }
+
+
 }
