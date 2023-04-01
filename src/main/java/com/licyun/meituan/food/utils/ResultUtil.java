@@ -6,7 +6,7 @@ import com.licyun.meituan.food.domain.ResultData;
 public class ResultUtil {
 
     /**
-     * main 注释
+     * main 注释2
      * @return
      */
     public static ResultData<?> success(){
