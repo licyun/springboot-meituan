@@ -5,6 +5,10 @@ import com.licyun.meituan.food.domain.ResultData;
 
 public class ResultUtil {
 
+    /**
+     * main 注释
+     * @return
+     */
     public static ResultData<?> success(){
         ResultData<Object> resultData = new ResultData<>();
         resultData.setCode(ResultDataEnum.SUCCESS.getCode());
